@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { BsGithub, BsDiscord } from "react-icons/bs";
 import { ThemeSwitcher } from "../theme/theme-switcher";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"; 
 
 export default function Nav() {
   const router = useRouter();
@@ -49,8 +49,9 @@ export default function Nav() {
           </div>
         </div>
         <div className="flex gap-3 items-center">
-          <BsGithub className="lg:h-7 lg:w-7 h-5 w-5" />
-          <BsDiscord className="lg:h-7 lg:w-7 h-5 w-5" />
+          <a href="https://github.com/miftahganzz" target="_blank" rel="noopener noreferrer">
+            <BsGithub className="lg:h-7 lg:w-7 h-5 w-5" />
+          </a>
           <ThemeSwitcher />
         </div>
       </nav>
