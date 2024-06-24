@@ -7,11 +7,11 @@ import useSWR from 'swr';
 
 export default function Home() {
   const {
-    data: videos,
+    data: results,
     error,
     isLoading,
-  } = useSWR<VideoJSON[]>('/api/home', fetcher);
-
+  } = useSWR<any[]>('/api/home', fetcher); 
+  
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
@@ -19,15 +19,18 @@ export default function Home() {
     <>
       <Nav />
       <main className="container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-flow-row gap-5 my-5">
-          {videos!.map((video) => {
-            return (
-              <Link key={video.id} href={`/watch?v=${video.id}`}>
-                <VideoCard key={video.id} video={video} />
-              </Link>
-            );
-          })}
-        </div>
+        {results.map((videos, index) => (
+          <div key={index} className="my-5">
+            <h2 className="text-xl font-bold mb-3">Query {index + 1}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-flow-row gap-5">
+              {videos.map((video: VideoJSON) => (
+                <Link key={video.id} href={`/watch?v=${video.id}`}>
+                  <VideoCard key={video.id} video={video} />
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
       </main>
     </>
   );
