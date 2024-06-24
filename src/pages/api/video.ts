@@ -9,7 +9,7 @@ export default async function GetVideo(req: NextApiRequest, res: NextApiResponse
 
   try {
     const video = await YouTube.getVideo(id);
-    const relatedVideos = await video.related();
+    const relatedVideos = await YouTube.search(video.title, { limit: 10 });
 
     res.status(200).json({
       video: video.toJSON(),
