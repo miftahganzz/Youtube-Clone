@@ -1,6 +1,6 @@
 import Nav from '@/components/nav/nav';
 import VideoSearchCard from '@/components/page/VideoSearchCard';
-import { IVideoInfo, VideoJSON } from '@/components/page/common';
+import { IVideoInfo, VideoJSON, ChannelInfo } from '@/components/page/common'; // Pastikan ChannelInfo atau tipe yang sesuai dengan properti subscribers ada di sini
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { interFont } from '@/lib/constants';
 import { cn, fetcher, formatNumber, acronym } from '@/lib/utils';
@@ -25,6 +25,9 @@ export default function Watch() {
 
   if (error) return <div>Failed to load</div>;
   if (!data || isValidating) return <div>Loading...</div>;
+
+  // Menambahkan tipe data untuk channelInfo
+  const channelInfo = data.video.channel as ChannelInfo;
 
   return (
     <>
@@ -56,13 +59,13 @@ export default function Watch() {
               </div>
               <div className="flex gap-5 items-start">
                 <Avatar>
-                  <AvatarFallback>{acronym(data.video.channel.name)}</AvatarFallback>
-                  <AvatarImage src={data.video.channel.icon} />
+                  <AvatarFallback>{acronym(channelInfo.name)}</AvatarFallback>
+                  <AvatarImage src={channelInfo.icon} />
                 </Avatar>
                 <div>
-                  <h1 className="font-semibold">{data.video.channel.name}</h1>
+                  <h1 className="font-semibold">{channelInfo.name}</h1>
                   <p className="text-xs text-muted-foreground">
-                    {data.video.channel.subscribers ? `${data.video.channel.subscribers} subscribers` : 'N/A'}
+                    {channelInfo.subscribers ? `${channelInfo.subscribers} subscribers` : 'N/A'}
                   </p>
                 </div>
               </div>
