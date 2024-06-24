@@ -11,7 +11,7 @@ export default function Home() {
 
   if (error) return <div>Failed to load</div>;
   if (!results) return (
-    <div className="spinner"></div>
+    <div className={styles.spinner}></div>
   );
 
   return (
