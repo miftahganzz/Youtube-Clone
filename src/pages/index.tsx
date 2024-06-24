@@ -1,7 +1,7 @@
 import Nav from '@/components/nav/nav';
 import VideoCard from '@/components/page/VideoCard';
 import { VideoJSON } from '@/components/page/common';
-import { fetcher } from '@/lib/utils';
+import { fetcher } from '@/src/lib/utils';
 import Link from 'next/link';
 import useSWR from 'swr';
 
