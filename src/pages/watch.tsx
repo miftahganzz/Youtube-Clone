@@ -62,7 +62,7 @@ export default function Watch() {
                 <div>
                   <h1 className="font-semibold">{data.video.channel.name}</h1>
                   <p className="text-xs text-muted-foreground">
-                    {data.video.channel.subscribers || 'N/A'} subscribers
+                    {data.video.channel.subscribers ? `${data.video.channel.subscribers} subscribers` : 'N/A'}
                   </p>
                 </div>
               </div>
