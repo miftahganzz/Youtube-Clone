@@ -13,7 +13,7 @@ export default function Watch() {
   const router = useRouter();
   const { v } = router.query;
 
-  const { data, error, isLoading } = useSWR<IVideoInfo>(() => {
+  const { data, error, isValidating } = useSWR<IVideoInfo>(() => {
     if (!v) {
       router.replace('/');
       return null;
@@ -24,7 +24,7 @@ export default function Watch() {
   }, fetcher);
 
   if (error) return <div>Failed to load</div>;
-  if (!data || isLoading) return <div>Loading...</div>;
+  if (!data || isValidating) return <div>Loading...</div>;
 
   return (
     <>
@@ -32,11 +32,13 @@ export default function Watch() {
       <main className="px-6">
         <div className="flex flex-col lg:flex-row justify-between gap-4 my-4">
           <div className="flex-1">
-            <iframe
-              src={`https://www.youtube.com/embed/${data.video.id}?autoplay=1&enablejsapi=1`}
-              className="aspect-video border-none w-full"
-              allowFullScreen
-            />
+            <div className="aspect-w-16 aspect-h-9">
+              <iframe
+                src={`https://www.youtube.com/embed/${data.video.id}?autoplay=1&enablejsapi=1`}
+                className="border-none w-full h-full"
+                allowFullScreen
+              />
+            </div>
             <div>
               <div className="py-2 flex justify-between items-center flex-col lg:flex-row">
                 <div>
@@ -47,7 +49,6 @@ export default function Watch() {
                     <ThumbsUp className="h-5 w-5" />
                     <span>{formatNumber(data.video.ratings.likes)}</span>
                   </div>
-
                   <div>
                     <ThumbsDown className="h-5 w-5 cursor-pointer select-none" />
                   </div>
@@ -61,19 +62,17 @@ export default function Watch() {
                 <div>
                   <h1 className="font-semibold">{data.video.channel.name}</h1>
                   <p className="text-xs text-muted-foreground">
-                    N/A subscribers
+                    {data.video.channel.subscribers || 'N/A'} subscribers
                   </p>
                 </div>
               </div>
               <div className="bg-secondary my-5 p-3 rounded-lg">
                 <div className="text-sm font-semibold gap-3 flex">
-                  <span>{data.video.views.toLocaleString()} views</span>
+                  <span>{formatNumber(data.video.views)} views</span>
                   <span>{data.video.uploadedAt}</span>
                 </div>
                 <div className="overflow-auto">
-                  <pre
-                    className={cn(interFont.className, 'break-words text-sm')}
-                  >
+                  <pre className={cn(interFont.className, 'break-words text-sm')}>
                     {data.video.description}
                   </pre>
                 </div>
@@ -82,13 +81,15 @@ export default function Watch() {
           </div>
           <div className="flex flex-col gap-3">
             <h1 className="text-sm font-semibold">Related Videos</h1>
-            {data?.related.map((video) => (
+            {data?.related?.map((video) => (
               <Link href={`/watch?v=${video.id}`} key={video.id}>
-                <VideoSearchCard key={video.id} video={video} small />
+                <a>
+                  <VideoSearchCard key={video.id} video={video} small />
+                </a>
               </Link>
             )) || (
               <p className="text-xs text-muted-foreground">
-                No data available.
+                No related videos available.
               </p>
             )}
           </div>
