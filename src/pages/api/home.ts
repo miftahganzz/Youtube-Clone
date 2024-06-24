@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { YouTube } from "youtube-sr";
 
 const allQueries = [
-  "the weeknd save your tears",
   "trending music",
   "latest hits",
   "pop music 2024",
@@ -33,11 +32,8 @@ export default async function Home(req: NextApiRequest, res: NextApiResponse) {
 
     const results = await Promise.all(
       queries.map(async (query) => {
-        const videos = await YouTube.search(query);
-        return {
-          query,
-          videos: videos.map((video) => video.toJSON())
-        };
+        const videos = await YouTube.search(query); 
+        return videos.map((video) => video.toJSON());
       })
     );
 
@@ -47,3 +43,4 @@ export default async function Home(req: NextApiRequest, res: NextApiResponse) {
     return res.status(500).json({ error: "Failed to fetch data" });
   }
 }
+
