@@ -8,14 +8,14 @@ function getRandomQueries(queries: string[], count: number) {
 
 export default async function Home(req: NextApiRequest, res: NextApiResponse) {
   const queries = [
-    'Trending Music Indonesia',
+    'Trending Music',
     'Trending Gaming',
-    'Trending Music 2024 Indonesia',
+    'Trending Music 2024',
     'Sad Vibes',
     'Random Gaming',
-    'Random Music Indonesia',
-    'Random Meme Indonesia',
-    'Random Game Indonesia'
+    'Random Music',
+    'Random Meme',
+    'Random Game'
   ];
 
   const randomQueries = getRandomQueries(queries, 5);
