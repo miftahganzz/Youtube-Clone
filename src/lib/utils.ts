@@ -18,8 +18,13 @@ export function formatNumber(n: number) {
   return formatter.format(n);
 }
 
-export const fetcher = (...args: [RequestInfo, RequestInit]) =>
-  fetch(...args).then((res) => res.json());
+export const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return res.json();
+};
 
 export const shorten = (text: string, len = 60) => {
   if (text.length < len) return text;
