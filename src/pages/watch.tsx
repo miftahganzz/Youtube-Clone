@@ -1,6 +1,6 @@
 import Nav from '@/components/nav/nav';
 import VideoSearchCard from '@/components/page/VideoSearchCard';
-import { IVideoInfo, VideoJSON } from '@/components/page/common';
+import { IVideoInfo } from '@/components/page/common';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { interFont } from '@/lib/constants';
 import { cn, fetcher, formatNumber, acronym } from '@/lib/utils';
