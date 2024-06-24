@@ -4,13 +4,14 @@ import Nav from '@/components/nav/nav';
 import VideoCard from '@/components/page/VideoCard';
 import { VideoJSON } from '@/components/page/common';
 import { fetcher } from '@/lib/utils';
+import styles from '@/styles/globals.css'; 
 
 export default function Home() {
   const { data: results, error } = useSWR<any[]>('/api/home', fetcher);
 
   if (error) return <div>Failed to load</div>;
   if (!results) return (
-    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+    <div className="spinner"></div>
   );
 
   return (
